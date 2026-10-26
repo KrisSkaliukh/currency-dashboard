@@ -1,0 +1,38 @@
+.container {
+  background-color: #efeff4;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  max-width: 526px;
+  max-height: 383px;
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  border-radius: 24px;
+  row-gap: 24px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.fieldError,
+.serverError {
+  color: #ea3a3a;
+  font-size: 0.875rem;
+}
+
+.inputError {
+  outline: 1px solid #ea3a3a;
+}
