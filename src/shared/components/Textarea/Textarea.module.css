@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 120px;
+  max-height: 250px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background-color: #f2f3f9;
+  color: #18184c;
+  font: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.textarea::placeholder {
+  color: #9ca3af;
+  opacity: 1;
+}
+
+.textarea:focus {
+  outline: 2px solid #c7d2fe;
+  border-color: #6366f1;
+}
+
+.textareaError {
+  border: 1.5px solid #ea3a3a;
+  background-color: #fff2f2;
+}
+
+.error {
+  min-height: 18px;
+  color: #ea3a3a;
+  font-size: 13px;
+  line-height: 18px;
+  visibility: hidden;
+}
+
+.errorVisible {
+  visibility: visible;
+}

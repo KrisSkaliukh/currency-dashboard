@@ -26,7 +26,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
           ref={ref}
           id={inputId}
-          className={[styles.input, error && styles.inputError, className]
+          className={[styles.input, className, error && styles.inputError]
             .filter(Boolean)
             .join(' ')}
         />

@@ -46,8 +46,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
           ref={ref}
           id={selectId}
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
           className={[styles.select, error && styles.selectError, className]
             .filter(Boolean)
             .join(' ')}
