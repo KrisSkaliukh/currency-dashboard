@@ -13,7 +13,8 @@
   color: #8e93a1;
 }
 
-.subtitle, .title {
+.subtitle,
+.title {
   padding: 0;
   margin: 0;
 }
@@ -45,8 +46,8 @@
   padding: 8px 10px;
   border: none;
   border-radius: 10px;
-  background: #F0F1F6;
-  color: #8E93A1;
+  background: #f0f1f6;
+  color: #8e93a1;
   font: inherit;
   cursor: pointer;
   transition:
@@ -60,6 +61,6 @@
 }
 
 .activePeriod {
-  background: #18184C;
+  background: #18184c;
   color: #fff;
 }

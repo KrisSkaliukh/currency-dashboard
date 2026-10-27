@@ -37,7 +37,7 @@ export function CurrencyChart({
   flag,
   rates,
   period,
-  onPeriodChange
+  onPeriodChange,
 }: ICurrencyChartProps) {
   const chartData = useMemo(() => {
     return rates
@@ -57,9 +57,7 @@ export function CurrencyChart({
         <h2>
           {flag} {currencyCode} / USD
         </h2>
-        <p className={styles.subtitle}>
-          {periodLabels[period]}
-        </p>
+        <p className={styles.subtitle}>{periodLabels[period]}</p>
       </div>
 
       {latestRate && (
@@ -78,7 +76,7 @@ export function CurrencyChart({
                 dataKey="date"
                 tickFormatter={(date: string) => date.slice(5)}
               />
-              <YAxis 
+              <YAxis
                 domain={['auto', 'auto']}
                 tickFormatter={(value: number) => {
                   return Number(value.toFixed(4)).toString();
@@ -103,14 +101,12 @@ export function CurrencyChart({
       )}
 
       <div className={styles.periods}>
-        {periods.map((item) => (
+        {periods.map(item => (
           <button
             key={item}
             type="button"
             className={
-              period === item
-                ? styles.activePeriod
-                : styles.periodButton
+              period === item ? styles.activePeriod : styles.periodButton
             }
             onClick={() => onPeriodChange(item)}
           >

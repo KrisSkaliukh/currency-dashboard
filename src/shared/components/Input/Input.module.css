@@ -6,7 +6,6 @@
 }
 
 .label {
-  color: #18184c;
   font-size: 16px;
   font-weight: 500;
 }
@@ -40,8 +39,8 @@
 }
 
 .inputError {
-  border: 1.5px solid #ea3a3a;
-  background-color: #fff2f2;
+  border: 1.5px solid #ea3a3a !important;
+  background-color: #fff2f2 !important;
 }
 
 .error {

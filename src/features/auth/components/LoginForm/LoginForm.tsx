@@ -68,11 +68,7 @@ export function LoginForm() {
           {isSubmitting ? 'Signing in...' : 'Login'}
         </Button>
 
-        {serverError && (
-          <p className={styles.serverError} role="alert">
-            {serverError}
-          </p>
-        )}
+        {serverError && <p className={styles.serverError}>{serverError}</p>}
       </form>
     </div>
   );
