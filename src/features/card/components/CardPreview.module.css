@@ -184,3 +184,41 @@
   background: #18184c;
   color: #fff;
 }
+
+@media (max-width: 767px) {
+  .body {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .meta {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .metaDivider {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .backButton,
+  .editButton {
+    width: 100%;
+  }
+
+  .imageFigure,
+  .imageFigure img {
+    width: 96px;
+  }
+
+  .imageFigure img {
+    height: 64px;
+  }
+}

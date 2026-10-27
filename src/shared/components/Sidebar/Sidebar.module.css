@@ -1,12 +1,16 @@
 .sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   flex: 0 0 90px;
   flex-direction: column;
   align-items: center;
+  align-self: flex-start;
   width: 90px;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   padding: 20px 10px;
-  box-sizing: border-box;
   background-color: #fff;
 }
 
@@ -37,11 +41,9 @@
   gap: 4px;
   width: 64px;
   height: 72px;
-  box-sizing: border-box;
   border-radius: 14px;
   color: #8e93a1;
   text-decoration: none;
-
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -86,4 +88,30 @@
 .logout:hover {
   background-color: #f5f6fc;
   color: #1b194f;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    flex: 0 0 72px;
+    width: 72px;
+    padding: 12px 6px;
+  }
+
+  .logo {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+
+  .navItem,
+  .logout {
+    width: 56px;
+    min-height: 64px;
+    height: auto;
+  }
+
+  .label {
+    font-size: 11px;
+  }
 }

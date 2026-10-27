@@ -64,11 +64,17 @@ export function LoginForm() {
           />
         </div>
 
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing in...' : 'Login'}
-        </Button>
+        <div className={styles.actions}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className={styles.loginButton}
+          >
+            {isSubmitting ? 'Signing in...' : 'Login'}
+          </Button>
 
-        {serverError && <p className={styles.serverError}>{serverError}</p>}
+          {serverError && <p className={styles.serverError}>{serverError}</p>}
+        </div>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-sizing: border-box;
   min-height: 43px;
   padding: 0 28px;
   border: none;

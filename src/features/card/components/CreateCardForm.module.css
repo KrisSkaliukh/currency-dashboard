@@ -271,3 +271,47 @@
   min-height: 40px;
   border-radius: 14px;
 }
+
+@media (max-width: 1023px) {
+  .form {
+    padding: 20px;
+  }
+
+  .fields {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .column {
+    flex: none;
+    width: 100%;
+  }
+
+  .control,
+  .tagsBox,
+  .dropzone {
+    width: 100%;
+  }
+
+  .dropzone {
+    min-height: 140px;
+    padding: 16px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .cancelButton,
+  .submitButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .form {
+    padding: 16px;
+    border-radius: 16px;
+  }
+}
