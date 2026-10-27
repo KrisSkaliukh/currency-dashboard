@@ -1,0 +1,65 @@
+.chartCard {
+  min-width: 0;
+  padding: 24px;
+  background: #fff;
+  border-radius: 24px;
+  flex: 0 0 440px;
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+}
+
+.subtitle {
+  color: #8e93a1;
+}
+
+.subtitle, .title {
+  padding: 0;
+  margin: 0;
+}
+
+.cardTitle {
+  margin-bottom: 20px;
+}
+
+.currentRate {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+.chart {
+  width: 100%;
+  height: 280px;
+}
+
+.periods {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.periodButton,
+.activePeriod {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  background: #F0F1F6;
+  color: #8E93A1;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.periodButton:hover {
+  background: #f5f7ff;
+}
+
+.activePeriod {
+  background: #18184C;
+  color: #fff;
+}
