@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.select {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: 2px solid #c7d2fe;
+  border-color: #6366f1;
+}
+
+.selectError {
+  border-color: #dc2626;
+}
+
+.error {
+  min-height: 0;
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.errorVisible {
+  min-height: 16px;
+}

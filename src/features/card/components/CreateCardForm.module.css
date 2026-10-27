@@ -1,0 +1,135 @@
+.form {
+  flex: 1;
+  min-width: 0;
+  padding: 28px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgb(27 25 79 / 4%);
+  flex: 1;
+}
+
+.fields {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field > label:first-child {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #f2f3f9;
+  border-radius: 14px;
+  background: #f2f3f9;
+  font: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.field input,
+.field select {
+  height: 45px;
+}
+
+.field textarea {
+  min-height: 120px;
+  max-height: 250px;
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #9ca3af;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: 2px solid #c7d2fe;
+  border-color: #6366f1;
+}
+
+.input {
+  border-radius: 14px;
+  background-color: #f2f3f9;
+}
+
+.dropzone {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #4b5563;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.uploadIcon {
+  font-size: 32px;
+  color: #9ca3af;
+}
+
+.uploadHint {
+  color: #2563eb;
+  font-size: 13px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.actions button {
+  padding: 6px 20px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background: transparent;
+  border-color: #e6e7ed !important;
+  color: #374151;
+}
+
+.submitButton {
+  background: #18184c;
+  color: #fff;
+}
