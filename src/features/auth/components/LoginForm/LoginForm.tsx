@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from 'react-router';
 
 import { useAuth } from '../../AuthContext';
 import { loginSchema, type LoginFormValues } from '../../../auth/schema';
+import { Input } from '../../../../shared/components/Input/Input';
+import { Button } from '../../../../shared/components/Button/Button';
 
 import styles from './LoginForm.module.css';
 
@@ -40,41 +42,38 @@ export function LoginForm() {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         <div className={styles.titleBlock}>
-          <h1>Log in</h1>
-          <p>Welcome Back</p>
+          <h1 className={styles.title}>Log in</h1>
+          <p className={styles.subtitle}>Welcome Back</p>
         </div>
+
+        <div className={styles.inputBlock}>
+          <Input
+            type="email"
+            autoComplete="email"
+            placeholder="✉️  Email Address"
+            error={errors.email?.message}
+            {...register('email')}
+          />
+
+          <Input
+            type="password"
+            autoComplete="current-password"
+            placeholder="🔒  Password"
+            error={errors.password?.message}
+            {...register('password')}
+          />
+        </div>
+
+
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Signing in...' : 'Login'}
+        </Button>
 
         {serverError && (
           <p className={styles.serverError} role="alert">
             {serverError}
           </p>
         )}
-
-        <input
-          type="email"
-          autoComplete="email"
-          placeholder="✉️ Email Address"
-          className={errors.email ? styles.inputError : undefined}
-          {...register('email')}
-        />
-        {errors.email && (
-          <span className={styles.fieldError}>{errors.email.message}</span>
-        )}
-
-        <input
-          type="password"
-          autoComplete="current-password"
-          placeholder="🔒 Password"
-          className={errors.password ? styles.inputError : undefined}
-          {...register('password')}
-        />
-        {errors.password && (
-          <span className={styles.fieldError}>{errors.password.message}</span>
-        )}
-
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing in...' : 'Login'}
-        </button>
       </form>
     </div>
   );

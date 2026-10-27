@@ -1,5 +1,5 @@
 .container {
-  background-color: #efeff4;
+  background-color: #EFEFF4;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -8,11 +8,11 @@
 }
 
 .form {
-  background-color: #fff;
+  background-color: #FFF;
   width: 100vw;
   height: 100vh;
-  max-width: 526px;
-  max-height: 383px;
+  max-width: 436px;
+  max-height: 393px;
   display: flex;
   flex-direction: column;
   padding: 48px;
@@ -27,12 +27,23 @@
   gap: 8px;
 }
 
-.fieldError,
-.serverError {
-  color: #ea3a3a;
-  font-size: 0.875rem;
+.title, .subtitle {
+  margin: 0;
 }
 
-.inputError {
-  outline: 1px solid #ea3a3a;
+.subtitle {
+  color: #8E93A1;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.serverError {
+  color: #EA3A3A;
+  font-size: 0.875rem;
 }
