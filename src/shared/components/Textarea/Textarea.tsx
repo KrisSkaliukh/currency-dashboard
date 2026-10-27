@@ -34,7 +34,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <span
           id={errorId}
           className={`${styles.error} ${error ? styles.errorVisible : ''}`}
-          role={error ? 'alert' : undefined}
         >
           {error || ''}
         </span>

@@ -69,7 +69,7 @@ export function LoginForm() {
         </Button>
 
         {serverError && (
-          <p className={styles.serverError} role="alert">
+          <p className={styles.serverError}>
             {serverError}
           </p>
         )}

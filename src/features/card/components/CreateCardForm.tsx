@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -17,6 +17,7 @@ import { getTagColors } from '../tagColors';
 import styles from './CreateCardForm.module.css';
 
 const MAX_IMAGES = 5;
+let imageIdCounter = 0;
 
 const priorities = ['Low', 'Medium', 'High'];
 const statuses = [
@@ -50,7 +51,6 @@ function parseTags(value: string): string[] {
 type CreateCardFormProps = {
   mode: 'create' | 'edit';
   initialValues?: SubmittedCard | null;
-  formKey: number;
   onSubmitSuccess: (card: SubmittedCard) => void;
   onCancel: () => void;
 };
@@ -58,7 +58,6 @@ type CreateCardFormProps = {
 export function CreateCardForm({
   mode,
   initialValues,
-  formKey,
   onSubmitSuccess,
   onCancel,
 }: CreateCardFormProps) {
@@ -92,30 +91,6 @@ export function CreateCardForm({
       : emptyValues,
   });
 
-  useEffect(() => {
-    const nextTags = initialValues?.tags
-      ? parseTags(initialValues.tags)
-      : [];
-    const nextImages = initialValues?.images ?? [];
-
-    reset(
-      initialValues
-        ? {
-            title: initialValues.title,
-            description: initialValues.description,
-            priority: initialValues.priority,
-            status: initialValues.status ?? '',
-            assignee: initialValues.assignee ?? '',
-            deadline: initialValues.deadline ?? '',
-            tags: initialValues.tags ?? '',
-          }
-        : emptyValues,
-    );
-    setTags(nextTags);
-    setImages(nextImages);
-    setTagInput('');
-  }, [formKey, initialValues, reset]);
-
   const syncTags = (next: string[]) => {
     setTags(next);
     setValue('tags', next.join(', '), { shouldDirty: true });
@@ -135,37 +110,51 @@ export function CreateCardForm({
     syncTags(tags.filter(item => item !== tag));
   };
 
+  const readFileAsDataUrl = (file: File): Promise<CardImage> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        imageIdCounter += 1;
+        resolve({
+          id: `image-${imageIdCounter}`,
+          name: file.name || `image-${imageIdCounter}`,
+          url: String(reader.result ?? ''),
+        });
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList?.length) return;
 
-    setImages(prev => {
-      const slotsLeft = MAX_IMAGES - prev.length;
-      if (slotsLeft <= 0) return prev;
+    const selected = Array.from(fileList);
+    if (!selected.length) return;
 
-      const next = Array.from(fileList)
-        .filter(file => file.type.startsWith('image/'))
-        .slice(0, slotsLeft)
-        .map(file => ({
-          id: `${file.name}-${file.lastModified}-${Math.random()}`,
-          name: file.name,
-          url: URL.createObjectURL(file),
-        }));
+    void (async () => {
+      try {
+        const slotsLeft = MAX_IMAGES - images.length;
+        if (slotsLeft <= 0) return;
 
-      return [...prev, ...next];
-    });
+        const loaded = await Promise.all(
+          selected.slice(0, slotsLeft).map(readFileAsDataUrl),
+        );
+
+        setImages(prev => {
+          const remaining = MAX_IMAGES - prev.length;
+          if (remaining <= 0) return prev;
+          return [...prev, ...loaded.slice(0, remaining)];
+        });
+      } catch {
+        // ignore unreadable files
+      }
+    })();
   };
 
   const imagesFull = images.length >= MAX_IMAGES;
 
   const removeImage = (id: string) => {
-    setImages(prev => {
-      const target = prev.find(image => image.id === id);
-      const isShared =
-        !!target &&
-        (initialValues?.images ?? []).some(image => image.url === target.url);
-      if (target && !isShared) URL.revokeObjectURL(target.url);
-      return prev.filter(image => image.id !== id);
-    });
+    setImages(prev => prev.filter(image => image.id !== id));
   };
 
   const onSubmit = (data: CreateCardFormValues) => {
@@ -354,54 +343,63 @@ export function CreateCardForm({
               </ul>
             )}
 
-            {imagesFull ? (
-              <div className={`${styles.dropzone} ${styles.dropzoneFull}`}>
-                <span className={styles.uploadIcon}>
-                  ☁️
-                </span>
-                <span>Maximum {MAX_IMAGES} images reached</span>
-                <span className={styles.uploadHint}>
-                  Remove an image to add another
-                </span>
-              </div>
-            ) : (
-              <label
-                className={styles.dropzone}
-                htmlFor="images"
-                onDragOver={event => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }}
-                onDrop={event => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  handleFiles(event.dataTransfer.files);
-                }}
-              >
-                <span className={styles.uploadIcon}>
-                  ☁️
-                </span>
-                <span>Drag & drop images here</span>
-                <span className={styles.uploadHint}>
-                  or click to browse
-                </span>
-              </label>
-            )}
-
             <input
               ref={fileInputRef}
               className={styles.fileInput}
-              id="images"
-              name="images"
               type="file"
               accept="image/*"
               multiple
-              disabled={imagesFull}
               onChange={event => {
-                handleFiles(event.target.files);
+                const { files } = event.target;
+                handleFiles(files);
                 event.target.value = '';
               }}
             />
+
+            <div
+              className={[
+                styles.dropzone,
+                imagesFull ? styles.dropzoneFull : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              role={imagesFull ? undefined : 'button'}
+              tabIndex={imagesFull ? undefined : 0}
+              onClick={() => {
+                if (!imagesFull) fileInputRef.current?.click();
+              }}
+              onKeyDown={event => {
+                if (imagesFull) return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  fileInputRef.current?.click();
+                }
+              }}
+              onDragOver={event => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+              onDrop={event => {
+                event.preventDefault();
+                event.stopPropagation();
+                if (!imagesFull) handleFiles(event.dataTransfer.files);
+              }}
+            >
+              <span className={styles.uploadIcon}>☁️</span>
+              {imagesFull ? (
+                <>
+                  <span>Maximum {MAX_IMAGES} images reached</span>
+                  <span className={styles.uploadHint}>
+                    Remove an image to add another
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>Drag & drop images here</span>
+                  <span className={styles.uploadHint}>or click to browse</span>
+                </>
+              )}
+            </div>
             <span className={styles.errorSlot} />
           </div>
         </div>

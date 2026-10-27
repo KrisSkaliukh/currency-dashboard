@@ -34,7 +34,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <span
           id={errorId}
           className={`${styles.error} ${error ? styles.errorVisible : ''}`}
-          role={error ? 'alert' : undefined}
         >
           {error || ''}
         </span>

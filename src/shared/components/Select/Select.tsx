@@ -70,7 +70,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <span
           id={errorId}
           className={`${styles.error} ${error ? styles.errorVisible : ''}`}
-          role={error ? 'alert' : undefined}
         >
           {error || ''}
         </span>
