@@ -145,9 +145,7 @@ export function CreateCardForm({
           if (remaining <= 0) return prev;
           return [...prev, ...loaded.slice(0, remaining)];
         });
-      } catch {
-        // ignore unreadable files
-      }
+      } catch {}
     })();
   };
 
@@ -251,9 +249,7 @@ export function CreateCardForm({
           />
 
           <div className={styles.dateField}>
-            <span className={styles.dateIcon}>
-              🗓️
-            </span>
+            <span className={styles.dateIcon}>🗓️</span>
             <Input
               id="deadline"
               label="Deadline"
@@ -415,11 +411,7 @@ export function CreateCardForm({
           Cancel
         </Button>
 
-        <Button
-          type="submit"
-          fullWidth={false}
-          className={styles.submitButton}
-        >
+        <Button type="submit" fullWidth={false} className={styles.submitButton}>
           {mode === 'edit' ? 'Save Card' : 'Create Card'}
         </Button>
       </div>

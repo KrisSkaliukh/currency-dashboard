@@ -40,11 +40,7 @@ type CardPreviewProps = {
   onEdit: () => void;
 };
 
-export function CardPreview({
-  card,
-  onBackToForm,
-  onEdit,
-}: CardPreviewProps) {
+export function CardPreview({ card, onBackToForm, onEdit }: CardPreviewProps) {
   const tags = parseTags(card.tags);
   const statusLabel = card.status
     ? (statusLabels[card.status] ?? card.status)
@@ -56,15 +52,12 @@ export function CardPreview({
   return (
     <div className={styles.wrapper}>
       <article className={styles.card}>
-
         <div className={styles.body}>
           <div className={styles.badges}>
             {statusLabel && (
               <span className={styles.statusBadge}>{statusLabel}</span>
             )}
-            <span className={styles.priorityBadge}>
-              {card.priority}
-            </span>
+            <span className={styles.priorityBadge}>{card.priority}</span>
           </div>
 
           <h2 className={styles.title}>{card.title}</h2>
@@ -143,7 +136,6 @@ export function CardPreview({
           </div>
         </div>
       </article>
-
     </div>
   );
 }
