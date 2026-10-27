@@ -13,15 +13,38 @@ export const formatRate = (value: number | null) => {
   });
 }
 
-export const getCountryFlag = (countryCode: string): string => {
-  const code = countryCode.toUpperCase();
+const currencyFlags: Record<string, string> = {
+  EUR: '🇪🇺',
+  ANG: '🌐',
+  XAF: '🌍',
+  XAG: '🥈',
+  XAU: '🥇',
+  XCD: '🌴',
+  XCG: '🇨🇼',
+  XDR: '🌐',
+  XOF: '🌍',
+  XPD: '⚪',
+  XPF: '🌊',
+  XPT: '⚪',
+  XRP: '🌐',
+  BCH: '🌐',
+};
 
-  if (!/^[A-Z]{2}$/.test(code)) {
+export const getCountryFlag = (currencyCode: string): string => {
+  const code = currencyCode.trim().toUpperCase();
+
+  if (currencyFlags[code]) {
+    return currencyFlags[code];
+  }
+
+  const countryCode = code.slice(0, 2);
+
+  if (!/^[A-Z]{2}$/.test(countryCode)) {
     return '🌐';
   }
 
-  const firstChar = code.charCodeAt(0) + 127397;
-  const secondChar = code.charCodeAt(1) + 127397;
+  const firstChar = countryCode.charCodeAt(0) + 127397;
+  const secondChar = countryCode.charCodeAt(1) + 127397;
 
   return String.fromCodePoint(firstChar, secondChar);
 };

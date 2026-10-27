@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 
 import { Header } from "../../../shared/components/Header/Header";
+import { useCurrencies } from "../useCurrencies";
 import { CurrencyRateRow, ExchangeRate, Period } from "../types";
+import { formatRate, formattedDate, getCountryFlag } from "../../../shared/utils";
 
 import styles from './CurrencyTable.module.css'
-import { useCurrencies } from "../useCurrencies";
-import { formatRate } from "../../../shared/utils";
 
 export function CurrencyTable () {
   const [period, setPeriod] = useState<Period>('1M');
@@ -39,7 +39,7 @@ export function CurrencyTable () {
         {
           code: currency.iso_code,
           name: currency.name,
-          flag: '🌐',
+          flag: getCountryFlag(currency.iso_code),
           surrender: null,
           buy: null,
           rate: current.rate,
@@ -49,14 +49,16 @@ export function CurrencyTable () {
       ];
     });
   }, [currencies, rates]);
-
-  console.log('Currencies:', currencies);
-  console.log('Rates:', rates);
-  console.log('Rows:', rows);
+  console.log(currencies)
 
   return (
     <div>
-      <Header title="Exchange ratesd" />
+      <div className={styles.header}>
+        <Header title="Exchange ratesd" />
+        <time className={styles.date}>
+          {formattedDate}
+        </time>
+      </div>
       
       <div className={styles.tableCard}>
         <div className={styles.tableScroll}>

@@ -1,7 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.date {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: #E7EEFF;
+  color: #2563EB;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .tableCard{
   min-width: 0;
   padding: 12px 20px;
-  border-radius: 24px;
+  border-radius: 20px;
   background: #fff;
   box-shadow: 0 4px 20px rgb(27 25 79 / 4%);
 }
@@ -15,6 +32,7 @@
   border-collapse: collapse;
   font-size: 14px;
   white-space: nowrap;
+  table-layout: fixed;
 }
 
 .table th {
@@ -36,6 +54,13 @@
 
 .table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.table th,
+.table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .currency {
