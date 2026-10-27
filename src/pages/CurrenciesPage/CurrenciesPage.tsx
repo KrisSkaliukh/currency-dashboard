@@ -1,9 +1,9 @@
-import { Header } from '../../shared/components/Header/Header';
+import { CurrencyTable } from '../../features/currencies/components/CurrencyTable';
 
 export function CurrenciesPage() {
   return (
     <main>
-      <Header title="Exchange ratesd" />
+      <CurrencyTable />
     </main>
   );
 }
