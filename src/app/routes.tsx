@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { GuestRoute } from '../features/auth/GuestRoute';
 import { ProtectedRoute } from '../features/auth/ProtectedRoute';
+import { AppLayout } from '../layout/AppLayout';
 import { CardFormPage } from '../pages/CardFormPage/CardFormPage';
 import { CurrenciesPage } from '../pages/CurrenciesPage/CurrenciesPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
@@ -15,8 +16,10 @@ export function AppRoutes() {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path={ROUTES.currencies} element={<CurrenciesPage />} />
-        <Route path={ROUTES.card} element={<CardFormPage />} />
+        <Route element={<AppLayout />}>
+          <Route path={ROUTES.currencies} element={<CurrenciesPage />} />
+          <Route path={ROUTES.card} element={<CardFormPage />} />
+        </Route>
       </Route>
 
       <Route path="/" element={<Navigate to={ROUTES.currencies} replace />} />
