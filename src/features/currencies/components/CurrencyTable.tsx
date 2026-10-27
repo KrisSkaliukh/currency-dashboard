@@ -8,9 +8,11 @@ import {
   formattedDate,
   getCountryFlag,
 } from '../../../shared/utils';
+import { CurrencyChart } from './CurrencyChart';
 
 import styles from './CurrencyTable.module.css';
-import { CurrencyChart } from './CurrencyChart';
+
+const SPREAD = 0.01;
 
 export function CurrencyTable() {
   const [period, setPeriod] = useState<Period>('1M');
@@ -43,8 +45,8 @@ export function CurrencyTable() {
           code: currency.iso_code,
           name: currency.name,
           flag: getCountryFlag(currency.iso_code),
-          surrender: null,
-          buy: null,
+          surrender: current.rate * (1 - SPREAD),
+          buy: current.rate * (1 + SPREAD),
           rate: current.rate,
           change: previous ? current.rate - previous.rate : null,
           time: current.date,
@@ -126,6 +128,8 @@ export function CurrencyTable() {
             currencyCode={selectedCurrency}
             flag={getCountryFlag(selectedCurrency)}
             rates={rates}
+            period={period}
+            onPeriodChange={setPeriod}
           />
         )}
       </div>

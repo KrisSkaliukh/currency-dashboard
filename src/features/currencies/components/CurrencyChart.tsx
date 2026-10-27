@@ -9,7 +9,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 
-import type { ExchangeRate } from '../types';
+import type { ExchangeRate, Period } from '../types';
 import { formatRate } from '../../../shared/utils';
 
 import styles from './CurrencyChart.module.css';
@@ -18,12 +18,26 @@ interface ICurrencyChartProps {
   currencyCode: string;
   flag: string;
   rates: ExchangeRate[];
+  period: Period;
+  onPeriodChange: (period: Period) => void;
 }
+
+const periods: Period[] = ['1W', '1M', '3M', '6M', '1Y'];
+
+const periodLabels: Record<Period, string> = {
+  '1W': '1 week',
+  '1M': '1 month',
+  '3M': '3 months',
+  '6M': '6 months',
+  '1Y': '1 year',
+};
 
 export function CurrencyChart({
   currencyCode,
   flag,
   rates,
+  period,
+  onPeriodChange
 }: ICurrencyChartProps) {
   const chartData = useMemo(() => {
     return rates
@@ -43,7 +57,9 @@ export function CurrencyChart({
         <h2>
           {flag} {currencyCode} / USD
         </h2>
-        <p className={styles.subtitle}>Monthly dynamics</p>
+        <p className={styles.subtitle}>
+          {periodLabels[period]}
+        </p>
       </div>
 
       {latestRate && (
@@ -62,7 +78,12 @@ export function CurrencyChart({
                 dataKey="date"
                 tickFormatter={(date: string) => date.slice(5)}
               />
-              <YAxis domain={['auto', 'auto']} />
+              <YAxis 
+                domain={['auto', 'auto']}
+                tickFormatter={(value: number) => {
+                  return Number(value.toFixed(4)).toString();
+                }}
+              />
 
               <Tooltip
                 labelFormatter={date => String(date)}
@@ -72,7 +93,7 @@ export function CurrencyChart({
               <Line
                 type="monotone"
                 dataKey="rate"
-                stroke="#6366f1"
+                stroke="#2563eb"
                 strokeWidth={2}
                 dot={false}
               />
@@ -80,6 +101,23 @@ export function CurrencyChart({
           </ResponsiveContainer>
         </div>
       )}
+
+      <div className={styles.periods}>
+        {periods.map((item) => (
+          <button
+            key={item}
+            type="button"
+            className={
+              period === item
+                ? styles.activePeriod
+                : styles.periodButton
+            }
+            onClick={() => onPeriodChange(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }
