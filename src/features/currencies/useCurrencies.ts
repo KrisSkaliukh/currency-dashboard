@@ -48,4 +48,4 @@ export function useCurrencies(period: Period) {
       void ratesQuery.refetch();
     },
   };
-};
+}

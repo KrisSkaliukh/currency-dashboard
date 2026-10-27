@@ -24,8 +24,6 @@ export const currenciesApi = {
       to,
     });
 
-    return fetchJson<ExchangeRate[]>(
-      `${API_URL}/rates?${params.toString()}`,
-    );
+    return fetchJson<ExchangeRate[]>(`${API_URL}/rates?${params.toString()}`);
   },
 };

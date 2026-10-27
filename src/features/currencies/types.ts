@@ -1,4 +1,4 @@
-export type Period = "1W" | "1M" | "3M" | "6M" | "1Y";
+export type Period = '1W' | '1M' | '3M' | '6M' | '1Y';
 
 export type Currency = {
   iso_code: string;

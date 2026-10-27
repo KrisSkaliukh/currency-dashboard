@@ -11,7 +11,7 @@ export const formatRate = (value: number | null) => {
     minimumFractionDigits: 4,
     maximumFractionDigits: 4,
   });
-}
+};
 
 const currencyFlags: Record<string, string> = {
   EUR: '🇪🇺',
