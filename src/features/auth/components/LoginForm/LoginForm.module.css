@@ -1,23 +1,24 @@
 .container {
-  background-color: #efeff4;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  min-height: 100vh;
+  width: 100%;
+  place-items: center;
+  padding: 28px 20px;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgb(37 99 235 / 5%), transparent 34%),
+    var(--color-page);
 }
 
 .form {
-  background-color: #fff;
-  width: 100vw;
-  height: 100vh;
-  max-width: 436px;
-  max-height: 393px;
   display: flex;
   flex-direction: column;
-  padding: 48px;
-  border-radius: 24px;
-  row-gap: 24px;
+  gap: 24px;
+  width: min(100%, 440px);
+  padding: 42px;
+  border: 1px solid var(--color-border);
+  border-radius: 26px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
 .titleBlock {
@@ -25,6 +26,28 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  padding-bottom: 2px;
+}
+
+.brandMark {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 8px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.brandMark svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .title,
@@ -32,19 +55,72 @@
   margin: 0;
 }
 
+.title {
+  color: var(--color-ink);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
 .subtitle {
-  color: #8e93a1;
-  font-weight: 500;
+  color: var(--color-muted);
   font-size: 15px;
+  font-weight: 500;
 }
 
 .inputBlock {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+}
+
+.inputWithIcon {
+  position: relative;
+  width: 100%;
+}
+
+.inputIcon {
+  position: absolute;
+  z-index: 1;
+  top: 17px;
+  left: 17px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #8e93a1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  pointer-events: none;
+}
+
+.authInput {
+  height: 56px;
+  padding-left: 50px;
+  border-radius: 15px;
+  background: #f7f8fc;
 }
 
 .serverError {
-  color: #ea3a3a;
-  font-size: 0.875rem;
+  margin: -10px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgb(212 61 70 / 18%);
+  border-radius: 12px;
+  background: #fff8f8;
+  color: var(--color-danger);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 18px;
+  }
+
+  .form {
+    gap: 22px;
+    padding: 30px 22px;
+    border-radius: 22px;
+  }
 }

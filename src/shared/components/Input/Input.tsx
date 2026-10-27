@@ -13,6 +13,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const generatedId = useId();
     const inputId = id ?? generatedId;
     const errorId = `${inputId}-error`;
+    const describedBy = [props['aria-describedby'], error ? errorId : undefined]
+      .filter(Boolean)
+      .join(' ');
 
     return (
       <div className={styles.wrapper}>
@@ -26,19 +29,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
           ref={ref}
           id={inputId}
+          aria-invalid={error ? true : props['aria-invalid']}
+          aria-describedby={describedBy || undefined}
           className={[styles.input, error && styles.inputError, className]
             .filter(Boolean)
             .join(' ')}
         />
 
-        <span
-          id={errorId}
-          className={`${styles.error} ${error ? styles.errorVisible : ''}`}
-          role={error ? 'alert' : undefined}
-        >
-          {error || ''}
-        </span>
+        {error && (
+          <span id={errorId} className={styles.error} role="alert">
+            {error}
+          </span>
+        )}
       </div>
     );
   },
 );
+
+Input.displayName = 'Input';

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { Header } from '../../../shared/components/Header/Header';
 import { useCurrencies } from '../useCurrencies';
-import { CurrencyRateRow, ExchangeRate, Period } from '../types';
+import type { CurrencyRateRow, ExchangeRate, Period } from '../types';
 import {
   formatRate,
   formattedDate,
@@ -13,12 +13,23 @@ import { CurrencyChart } from './CurrencyChart';
 import styles from './CurrencyTable.module.css';
 
 const SPREAD = 0.01;
+const apiDateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+
+function formatApiDate(date: string) {
+  const parsedDate = new Date(`${date}T12:00:00Z`);
+  return Number.isNaN(parsedDate.valueOf()) ? date : apiDateFormatter.format(parsedDate);
+}
 
 export function CurrencyTable() {
   const [period, setPeriod] = useState<Period>('1M');
   const [selectedCurrency, setSelectedCurrency] = useState('');
 
-  const { currencies, rates } = useCurrencies(period);
+  const { currencies, rates, isLoading, error, refetch } = useCurrencies(period);
 
   const rows = useMemo(() => {
     const ratesByCurrency = new Map<string, ExchangeRate[]>();
@@ -35,7 +46,6 @@ export function CurrencyTable() {
       );
 
       const current = history.at(-1);
-
       if (!current) return [];
 
       const previous = history.at(-2);
@@ -55,17 +65,30 @@ export function CurrencyTable() {
     });
   }, [currencies, rates]);
 
+  const errorMessage =
+    error instanceof Error ? error.message : 'Exchange rates could not be loaded.';
+
   return (
-    <div>
+    <section className={styles.page} aria-label="Exchange rates">
       <div className={styles.header}>
-        <Header title="Exchange ratesd" />
+        <Header title="Exchange rates" />
         <time className={styles.date}>{formattedDate}</time>
       </div>
 
       <div className={styles.content}>
         <div className={styles.tableCard}>
+          <div className={styles.tableHeading}>
+            <div>
+              <h2 className={styles.tableTitle}>Exchange rates</h2>
+              <p className={styles.tableDescription}>Base currency: USD</p>
+            </div>
+            <span className={styles.rateCount}>
+              {rows.length} {rows.length === 1 ? 'currency' : 'currencies'}
+            </span>
+          </div>
+
           <div className={styles.tableScroll}>
-            <table className={styles.table}>
+            <table className={styles.table} aria-label="Exchange rates against USD">
               <thead>
                 <tr>
                   <th scope="col">Currency</th>
@@ -73,45 +96,89 @@ export function CurrencyTable() {
                   <th scope="col">Buy</th>
                   <th scope="col">Course</th>
                   <th scope="col">Change</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">Date</th>
                 </tr>
               </thead>
-
               <tbody>
                 {rows.map(row => (
                   <tr
                     key={row.code}
                     className={
-                      selectedCurrency === row.code ? styles.selectedRow : ''
+                      selectedCurrency === row.code ? styles.selectedRow : undefined
                     }
-                    onClick={() => {
-                      setSelectedCurrency(current =>
-                        current === row.code ? '' : row.code,
-                      );
-                    }}
                   >
                     <td>
-                      <span className={styles.currency}>
-                        <span>{row.flag}</span>
-                        <span>{row.code}</span>
-                      </span>
+                      <button
+                        type="button"
+                        className={styles.currencyButton}
+                        aria-label={`Show ${row.name} (${row.code}) chart against USD`}
+                        aria-pressed={selectedCurrency === row.code}
+                        onClick={() =>
+                          setSelectedCurrency(current =>
+                            current === row.code ? '' : row.code,
+                          )
+                        }
+                      >
+                        <span className={styles.flag} aria-hidden="true">
+                          {row.flag}
+                        </span>
+                        <span className={styles.currencyCode}>{row.code}</span>
+                      </button>
                     </td>
-
                     <td>{formatRate(row.surrender)}</td>
                     <td>{formatRate(row.buy)}</td>
-                    <td>{formatRate(row.rate)}</td>
-
+                    <td className={styles.rateValue}>{formatRate(row.rate)}</td>
                     <td>
-                      {row.change === null
-                        ? '—'
-                        : `${row.change > 0 ? '+' : ''}${formatRate(row.change)}`}
+                      {row.change === null ? (
+                        <span className={styles.noChange}>—</span>
+                      ) : (
+                        <span
+                          className={
+                            row.change > 0
+                              ? styles.positiveChange
+                              : row.change < 0
+                                ? styles.negativeChange
+                                : styles.noChange
+                          }
+                        >
+                          {row.change > 0 ? '+' : ''}{formatRate(row.change)}
+                        </span>
+                      )}
                     </td>
-
-                    <td>{row.time}</td>
+                    <td>
+                      <time dateTime={row.time}>{formatApiDate(row.time)}</time>
+                    </td>
                   </tr>
                 ))}
 
-                {rows.length === 0 && (
+                {rows.length === 0 && isLoading && (
+                  <tr>
+                    <td colSpan={6} className={styles.statusCell}>
+                      <span className={styles.loadingIndicator} aria-hidden="true" />
+                      <span role="status">Loading exchange rates...</span>
+                    </td>
+                  </tr>
+                )}
+
+                {rows.length === 0 && !isLoading && error && (
+                  <tr>
+                    <td colSpan={6} className={styles.statusCell}>
+                      <div className={styles.errorState} role="alert">
+                        <strong>Could not load exchange rates</strong>
+                        <span>{errorMessage}</span>
+                        <button
+                          type="button"
+                          className={styles.retryButton}
+                          onClick={() => refetch()}
+                        >
+                          Try again
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+
+                {rows.length === 0 && !isLoading && !error && (
                   <tr>
                     <td colSpan={6} className={styles.empty}>
                       No currency data available
@@ -124,15 +191,17 @@ export function CurrencyTable() {
         </div>
 
         {selectedCurrency && (
-          <CurrencyChart
-            currencyCode={selectedCurrency}
-            flag={getCountryFlag(selectedCurrency)}
-            rates={rates}
-            period={period}
-            onPeriodChange={setPeriod}
-          />
+          <div className={styles.chartWrap}>
+            <CurrencyChart
+              currencyCode={selectedCurrency}
+              flag={getCountryFlag(selectedCurrency)}
+              rates={rates}
+              period={period}
+              onPeriodChange={setPeriod}
+            />
+          </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
