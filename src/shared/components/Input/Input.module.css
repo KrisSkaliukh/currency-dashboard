@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  color: #18184c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background-color: #f6f6fb;
+  color: #18184c;
+  font: inherit;
+  font-size: 16px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.input::placeholder {
+  font-size: 15px;
+  color: #8e93a1;
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.inputError {
+  border: 1.5px solid #ea3a3a;
+  background-color: #fff2f2;
+}
+
+.error {
+  min-height: 18px;
+  color: #ea3a3a;
+  font-size: 13px;
+  line-height: 18px;
+  visibility: hidden;
+}
+
+.errorVisible {
+  visibility: visible;
+}
