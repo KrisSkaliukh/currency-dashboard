@@ -7,8 +7,8 @@
   padding: 0 28px;
   border: none;
   border-radius: 16px;
-  background-color: #18184C;
-  color: #FFF;
+  background-color: #18184c;
+  color: #fff;
   font: inherit;
   font-size: 16px;
   font-weight: 600;
@@ -17,7 +17,7 @@
   transition:
     background-color 0.2s ease,
     box-shadow 0.2s ease,
-    transform 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fullWidth {

@@ -1,5 +1,5 @@
 .container {
-  background-color: #EFEFF4;
+  background-color: #efeff4;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -8,7 +8,7 @@
 }
 
 .form {
-  background-color: #FFF;
+  background-color: #fff;
   width: 100vw;
   height: 100vh;
   max-width: 436px;
@@ -27,12 +27,13 @@
   gap: 8px;
 }
 
-.title, .subtitle {
+.title,
+.subtitle {
   margin: 0;
 }
 
 .subtitle {
-  color: #8E93A1;
+  color: #8e93a1;
   font-weight: 500;
   font-size: 15px;
 }
@@ -44,6 +45,6 @@
 }
 
 .serverError {
-  color: #EA3A3A;
+  color: #ea3a3a;
   font-size: 0.875rem;
 }
