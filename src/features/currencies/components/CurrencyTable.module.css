@@ -2,6 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin-bottom: 0;
 }
 
 .date {
@@ -31,6 +37,7 @@
 
 .tableScroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table {
@@ -100,4 +107,46 @@
   padding: 28px !important;
   color: #9095a7;
   text-align: center;
+}
+
+@media (max-width: 1199px) {
+  .content {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .date {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .tableCard {
+    padding: 8px 12px;
+    border-radius: 16px;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 479px) {
+  .table th:nth-child(5),
+  .table td:nth-child(5),
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    display: none;
+  }
 }

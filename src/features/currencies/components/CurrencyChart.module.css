@@ -7,6 +7,7 @@
   position: sticky;
   top: 24px;
   align-self: flex-start;
+  width: 100%;
 }
 
 .subtitle {
@@ -63,4 +64,37 @@
 .activePeriod {
   background: #18184c;
   color: #fff;
+}
+
+@media (max-width: 1199px) {
+  .chartCard {
+    flex: 1 1 auto;
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .chartCard {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .currentRate {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .chart {
+    height: 220px;
+  }
+
+  .periods {
+    flex-wrap: wrap;
+  }
+
+  .periodButton,
+  .activePeriod {
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 56px;
+  }
 }
